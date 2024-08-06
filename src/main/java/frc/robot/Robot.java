@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     field2d.setRobotPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
-    SmartDashboard.putData("LL Field", field2d);
+    // SmartDashboard.putData("LL Field", field2d);
   }
 
 

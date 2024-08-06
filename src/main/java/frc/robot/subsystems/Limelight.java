@@ -16,15 +16,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Limelight extends SubsystemBase {
-    private final Field2d field2d;
+    // private final Field2d field2d;
     private Swerve swerve;
     NetworkTable table = NetworkTableInstance.getDefault().getTable(VisionConstants.NAME);
     DoubleArraySubscriber CameraSeeBot = table.getDoubleArrayTopic("targetpose_cameraspace").subscribe(new double[]{});
     public Object robotToTarget;
 
-    public Limelight() {
-        field2d = new Field2d();
-    }
+    // public Limelight() {
+        // field2d = new Field2d();
+    // }
 
     @Override
     public void periodic() {

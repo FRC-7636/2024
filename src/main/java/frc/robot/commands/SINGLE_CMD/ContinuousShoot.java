@@ -6,28 +6,26 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-// import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Climber;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.ShooterConstants;
 
 public class ContinuousShoot extends Command {
     private final Shooter shooter;
     private final Intake intake;
-    // private final Climber climber;
+    private final Climber climber;
 
-    public ContinuousShoot(Shooter shooter, Intake intake){
-    // public ContinuousShoot(Shooter shooter, Intake intake, Climber climber) {
+    public ContinuousShoot(Shooter shooter, Intake intake, Climber climber) {
         this.shooter = shooter;
         this.intake = intake;
-        // this.climber = climber;
-        addRequirements(this.shooter, this.intake);
-        // addRequirements(this.shooter, this.intake, this.climber);
+        this.climber = climber;
+        addRequirements(this.shooter, this.intake, this.climber);
     }
 
 
     @Override
     public void execute() {
-        // climber.setPosition(3.5);
+        climber.setPosition(3.5);
         intake.setFloorAngle();
         intake.suck();
         intake.startConvey();

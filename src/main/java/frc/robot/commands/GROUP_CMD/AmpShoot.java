@@ -21,13 +21,15 @@ public class AmpShoot extends Command {
 
     @Override
     public void execute() {
-        shooter.AmpAngle();
-        shooter.AMPshoot();
-        shooter.transport();
-        if (!shooter.noteDetected()){
-            shooter.originAngle();
-            shooter.stopAll();
-        }
+        // shooter.AmpAngle();
+        // shooter.AMPshoot();
+        // shooter.transport();
+        intake.shoot();
+        intake.setAmpAngle();
+        // if (!shooter.noteDetected()){
+        //     shooter.originAngle();
+        //     shooter.stopAll();
+        // }
     }
 
     @Override

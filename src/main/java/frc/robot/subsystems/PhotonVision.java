@@ -37,6 +37,7 @@ public class PhotonVision extends SubsystemBase {
      * less. This matrix is in the form [x, y, theta], with units in meters and radians.
      */
     
+    
     public PhotonVision() {
         photonCamera = new PhotonCamera(VisionConstants.NAME);
         try {
@@ -45,6 +46,7 @@ public class PhotonVision extends SubsystemBase {
             throw new RuntimeException(error);
         }
     }
+    
     
     public PhotonTrackedTarget getBestTarget() {
         PhotonPipelineResult result = photonCamera.getLatestResult();
@@ -59,6 +61,7 @@ public class PhotonVision extends SubsystemBase {
 
         return target;
     }
+    
     
     public Pose2d getLatestEstimatedRobotPose() {
         PhotonTrackedTarget target = getBestTarget();
@@ -77,10 +80,12 @@ public class PhotonVision extends SubsystemBase {
         return new Pose2d();
     }
     
+    
+    
     @Override
     public void periodic() {
-        m_field2d.setRobotPose(getLatestEstimatedRobotPose());
-        SmartDashboard.putData("m_Field2d", m_field2d);
+        // m_field2d.setRobotPose(getLatestEstimatedRobotPose());
+        // SmartDashboard.putData("m_Field2d", m_field2d);
     }
     
 }

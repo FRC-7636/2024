@@ -100,7 +100,8 @@ public class Shooter extends SubsystemBase {
         transMotor.burnFlash();
         angleMotor.burnFlash();
 
-        anglePIDController.setReference(ShooterConstants.Control.TOP_POSITION, ControlType.kPosition);
+        // anglePIDController.setReference(ShooterConstants.Control.TOP_POSITION, ControlType.kPosition);
+        anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kPosition);
     }
 
     /**

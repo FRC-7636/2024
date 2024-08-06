@@ -13,7 +13,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.PhotonVision;
+// import frc.robot.subsystems.PhotonVision;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.AutoAimPID;
 import frc.robot.Constants.ShooterConstants;
@@ -23,16 +23,16 @@ public class SmartShoot extends Command {
     private final Intake intake;
     private final Swerve swerve;
     private final Limelight limelight;
-    private final PhotonVision photonvision;
+    // private final PhotonVision photonvision;
     private final PIDController yawCtrl = new PIDController(AutoAimPID.P, AutoAimPID.I, AutoAimPID.D);
     private final XboxController testController = new XboxController(2);
 
-    public SmartShoot(Shooter shooter, Intake intake, Swerve swerve, Limelight limelight, PhotonVision photonvision) {
+    public SmartShoot(Shooter shooter, Intake intake, Swerve swerve, Limelight limelight) {
         this.shooter = shooter;
         this.intake = intake;
         this.swerve = swerve;   
         this.limelight = limelight;
-        this.photonvision = photonvision;
+        // this.photonvision = photonvision;
 
         addRequirements(this.shooter, this.intake, this.swerve);
     }

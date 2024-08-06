@@ -121,9 +121,8 @@ public class Constants {
             public static final double AMP_POSITION = 350;
             public static final double SOURCE_POSITION = 10;
             public static final double ORIGIN_POSITION = 0;
-            public static final double SHOOT_SPEED = -0.6;
-            // public static final double SUCK_SPEED = 0.6;
-            public static final double SUCK_SPEED = 0.4;
+            public static final double SHOOT_SPEED = -0.8;
+            public static final double SUCK_SPEED = 0.6;
             public static final double CONVEYOR_SPEED = 0.4;
         }
     }
