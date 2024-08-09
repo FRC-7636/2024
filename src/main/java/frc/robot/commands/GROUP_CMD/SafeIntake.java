@@ -18,13 +18,14 @@ import frc.robot.commands.SINGLE_CMD.TransportSuck;
 import frc.robot.commands.TEST_CMD.StopEverything;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 
 public class SafeIntake extends SequentialCommandGroup{
     // private double timeOut = 1000;
     // private Timer timer = new Timer();
     // private TimerTask timeOutTask;
     // private boolean isTimeOut = false;
-    public SafeIntake(Intake intake,Shooter shooter){
+    public SafeIntake(Intake intake,Shooter shooter,Climber climber){
         // timer.schedule(timeOutTask, (long) timeOut);
         // timeOutTask = new TimerTask() {
         //     public void run(){
@@ -32,9 +33,11 @@ public class SafeIntake extends SequentialCommandGroup{
         //     }
         // };
         addCommands(new SmartIntake(shooter, intake));
+        addCommands(new InstantCommand(climber::setSucklevel));
         addCommands(new TransportSuck(shooter, intake));
         addCommands(new TransportShoot(shooter, intake));
         addCommands(new InstantCommand(shooter::standby));
+        addCommands(new InstantCommand(shooter::intakeAngle));
         // if (shooter.currentVel() >10) {
         //     isTimeOut = true;
         // }

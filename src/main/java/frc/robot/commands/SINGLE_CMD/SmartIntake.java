@@ -26,7 +26,7 @@ public class SmartIntake extends Command {
         intake.suck();
         intake.startConvey();
         shooter.transport();
-        shooter.standby();
+        shooter.suck();
         // shooter.shoot();
         if (shooter.noteDetected()) {
             shooter.stopTransport();

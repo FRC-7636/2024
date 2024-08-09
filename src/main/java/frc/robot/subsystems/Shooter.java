@@ -112,8 +112,8 @@ public class Shooter extends SubsystemBase {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
         desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
-        leftMotor.set(0.4);
-        rightMotor.set(0.4);
+        leftMotor.set(0.6);
+        rightMotor.set(0.6);
     }
     public void AMPshoot(){
         desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
@@ -148,6 +148,7 @@ public class Shooter extends SubsystemBase {
     public void ShooterTransport(){
         transMotor.set(ShooterConstants.Control.SHOOTER_TRANS_SPEED);
     }
+
 
     /**
      * Set transportation motor to the specified speed.
@@ -206,10 +207,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void shootTwo() {
-        // leftMotor.set(0.4);
-        // rightMotor.set(0.4);
-        leftMotor.set(0.3);
-        rightMotor.set(0.3);
+        leftMotor.set(0.4);
+        rightMotor.set(0.4);
     }
 
     /**
@@ -242,7 +241,9 @@ public class Shooter extends SubsystemBase {
     }
 
     public boolean velocityReady(){
-        return Math.abs(angleEncoder.getVelocity() - desiredSpeed) <= 1000;
+        // return Math.abs(angleEncoder.getVelocity() - desiredSpeed) <= 1000;
+        // return Math.abs(ShooterConstants.Control.SHOOT_VELOCITY - angleEncoder.getVelocity() ) <= 800;
+        return Math.abs(ShooterConstants.Control.SHOOT_VELOCITY ) >= 3200;
         // return Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
     }
 
@@ -258,6 +259,9 @@ public class Shooter extends SubsystemBase {
     }
     public void AmpAngle(){
         anglePIDController.setReference(ShooterConstants.Control.AMP_POSITION, ControlType.kPosition);
+    }
+    public void NearShootAngle(){
+        anglePIDController.setReference(ShooterConstants.Control.NEARSHOOT_POSITION, ControlType.kPosition);
     }
     public void up() {
         angleMotor.set(0.5);

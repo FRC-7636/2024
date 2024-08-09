@@ -1,9 +1,9 @@
 package frc.robot.commands.SINGLE_CMD;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Intake;
 
 
 public class JustShoot extends Command {
@@ -20,10 +20,13 @@ public class JustShoot extends Command {
 
     @Override
     public void execute() {
-        shooter.shootTwo();
-        intake.startConvey();
+        shooter.setPosition(ShooterConstants.Control.NEARSHOOT_POSITION);
+        shooter.shoot();
+        intake.backToZero();
         shooter.ShooterTransport();
-    }
+        intake.startConvey();
+        }
+    
 
     @Override
     public void end(boolean interrupted) {

@@ -17,13 +17,13 @@ public class TransportSuck extends Command {
 
     public void execute(){
         shooter.suck();
-        shooter.antiTransport();
+        // shooter.antiTransport();
         intake.reverseConvey();
     }
 
     @Override
     public boolean isFinished(){
-        return !shooter.noteDetected();
+        return shooter.noteDetected(); 
     }
 
     @Override

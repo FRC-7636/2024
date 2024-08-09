@@ -40,10 +40,12 @@ import frc.robot.commands.SINGLE_CMD.ContinuousShoot;
 import frc.robot.commands.SINGLE_CMD.FarShoot;
 import frc.robot.commands.SINGLE_CMD.JustShoot;
 import frc.robot.commands.SINGLE_CMD.NearShoot;
-import frc.robot.commands.SINGLE_CMD.Shoot;
+import frc.robot.commands.SINGLE_CMD.ShooterStandby;
 import frc.robot.commands.SINGLE_CMD.ShooterSuck;
 import frc.robot.commands.SINGLE_CMD.SmartIntake;
 import frc.robot.commands.SINGLE_CMD.SmartShoot;
+// import frc.robot.commands.SINGLE_CMD.StopAll;
+
 import frc.robot.commands.SINGLE_CMD.TransportShoot;
 import frc.robot.commands.SINGLE_CMD.TransportSuck;
 import frc.robot.subsystems.*;
@@ -100,8 +102,10 @@ public class RobotContainer {
     private final AmpShoot ampShoot = new AmpShoot(shooter, intake);
     private final TransportSuck transportSuck = new TransportSuck(shooter, intake);
     private final TransportShoot transportShoot = new TransportShoot(shooter, intake);
-    private final SafeIntake safeIntake = new SafeIntake(intake, shooter);
+    private final SafeIntake safeIntake = new SafeIntake(intake, shooter, climber);
     private final ClimbUp climbUp = new ClimbUp(climber);
+    private final ShooterStandby shooterStandby = new ShooterStandby(shooter, intake);
+    // private final StopAll stopAll = new StopAll(intake, shooter, climber);
     // private final AutoDriveToAmp autoDriveToAmp = new AutoDriveToAmp(driveBase, limelight, null, intake, climber);
     
     private SendableChooser<Command> getAutoChooser = new SendableChooser<>();
@@ -142,6 +146,64 @@ public class RobotContainer {
         // new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
         // new JoystickButton(chassisCtrl, 6).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         // new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::setIntakeAsHead));
     }
     private void configureYuJieBindings() {
@@ -177,40 +239,53 @@ public class RobotContainer {
     }
 
     public void Jay_configureBindings(){
-        new JoystickButton(Jay_Ctrl, 1).whileTrue(new InstantCommand(intake::suck)).onFalse(new InstantCommand(intake::stopAll)); // intake suck
-        new JoystickButton(Jay_Ctrl, 2).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll)); //intake shoot
-        new JoystickButton(Jay_Ctrl, 3).onTrue(new InstantCommand(intake::setFloorAngle)); //intake set floor angle
-        new JoystickButton(Jay_Ctrl, 4).onTrue(ampCmd); //Amp
-        new JoystickButton(Jay_Ctrl, 5).whileTrue(ampShoot).onFalse(backToOrigin).onFalse(new InstantCommand(intake::stopAll)); //AmpShoot
-        new JoystickButton(Jay_Ctrl, 6).onTrue(backToOrigin); //back to origin
-        // new JoystickButton(Jay_Ctrl, 4).whileTrue(smartIntake).onFalse(new InstantCommand(intake::stopAll)).onFalse(new InstantCommand(intake::backToZero)).onFalse(new InstantCommand(shooter::stopAll)); //smart intake
-        // new JoystickButton(Jay_Ctrl, 3).onTrue(safeIntake); //safe intake
-
-        new POVButton(Jay_Ctrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop)); //climber up
-        new POVButton(Jay_Ctrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
-        new POVButton(Jay_Ctrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber)); //climber set floor level
+        
+        // new JoystickButton(Jay_Ctrl, 1).onTrue(safeIntake);
+        new JoystickButton(Jay_Ctrl, 1).onTrue(new InstantCommand(driveBase::setIntakeAsHead));
+        new JoystickButton(Jay_Ctrl, 2).onTrue(new InstantCommand(shooter::shoot)).onTrue(new InstantCommand(shooter::NearShootAngle)).whileFalse(new InstantCommand(shooter::stopAll)).onFalse(new InstantCommand(intake::stopAll));
+        // new JoystickButton(Jay_Ctrl, 3).onTrue(backToOrigin); //back to origin
+        // new JoystickButton(Jay_Ctrl, 4).onTrue(ampCmd); //Amp
+        new JoystickButton(Jay_Ctrl, 6).whileTrue(justShoot).onFalse(new InstantCommand(shooter::stopAll)).onFalse(new InstantCommand(intake::stopAll)); //intake set floor angle
+        new JoystickButton(Jay_Ctrl, 7).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll)); //intake shoot
+        new JoystickButton(Jay_Ctrl, 8).onTrue(new InstantCommand(shooter::NearShootAngle)).whileTrue(transportSuck).onFalse(new InstantCommand(shooter::stopAll));
+        
+        // new POVButton(Jay_Ctrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop)); //climber up
+        // new POVButton(Jay_Ctrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
         // new POVButton(Jay_Ctrl, 90).whileTrue(climbUp);
+        new POVButton(Jay_Ctrl, 90).whileTrue(reverse);
+
+        new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(intake::setFloorAngle));
+        new JoystickButton(chassisCtrl, 2).onTrue(backToOrigin);
+        new JoystickButton(chassisCtrl, 3).onTrue(safeIntake);
+        new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::suck)).onFalse(new InstantCommand(intake::stopIntake)); // intake suck
+        new JoystickButton(chassisCtrl, 6).onTrue(new InstantCommand(intake::setAmpAngle)).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll)); //intake shoot
+        // new JoystickButton(Jay_Ctrl, 5).whileTrue(ampShoot).onFalse(backToOrigin).onFalse(new InstantCommand(intake::stopAll)); //AmpShoot
+
+        new POVButton(chassisCtrl, 0).onTrue(ampCmd); //amp
+        new POVButton(chassisCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
+        new POVButton(chassisCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber)); //climber set floor level
+
     }
 
     public void createButtonsOnDS() {
         // SmartDashboard.putData("AMP Stage", new Amp(climber, shooter, intake));
-        SmartDashboard.putData("AMP Stage", new Amp(climber, shooter, intake));
-        SmartDashboard.putData("SafeIntake", new SafeIntake(intake, shooter));
-        SmartDashboard.putData("Smart Shoot", new SmartShoot(shooter, intake, driveBase, limelight));
+        // SmartDashboard.putData("AMP Stage", new Amp(climber, shooter, intake));
+        // SmartDashboard.putData("SafeIntake", new SafeIntake(intake, shooter));
+        // SmartDashboard.putData("Smart Shoot", new SmartShoot(shooter, intake, driveBase, limelight));
         // SmartDashboard.putData("Rervse Note", new InstantCommand(intake::shoot).andThen(intake::setReverseAngle).andThen(shooter::intakeAngle).andThen(new WaitCommand(1)).andThen(new Reverse(shooter, intake)));
-        SmartDashboard.putData("Back to Origin", new BackToOrigin(climber, intake, shooter));
         // SmartDashboard.putData("Back to Origin", new BackToOrigin(climber, intake, shooter));
-        SmartDashboard.putData("AmpShoot", new AmpShoot(shooter, intake));
-        SmartDashboard.putData("JustShoot", new JustShoot(shooter, intake));
-        SmartDashboard.putData("TransportShoot", new TransportShoot(shooter, intake));
-        SmartDashboard.putData("NearShoot", new NearShoot(shooter, intake));
-        SmartDashboard.putData("SmartIntake", new SmartIntake(shooter, intake).andThen(justShoot));
+        // SmartDashboard.putData("Back to Origin", new BackToOrigin(climber, intake, shooter));
+        // SmartDashboard.putData("AmpShoot", new AmpShoot(shooter, intake));
+        // SmartDashboard.putData("JustShoot", new JustShoot(shooter, intake));
+        // SmartDashboard.putData("TransportShoot", new TransportShoot(shooter, intake));
+        // SmartDashboard.putData("NearShoot", new NearShoot(shooter, intake));
+        // SmartDashboard.putData("SmartIntake", new SmartIntake(shooter, intake).andThen(justShoot));
         // SmartDashboard.putData("Auto AMP Shoot", new AutoDriveToAmp(driveBase, limelight, null, intake, climber));
         // SmartDashboard.putData("Auto AMP Shoot", new AutoDriveToAmp(driveBase, limelight, null, intake));
-        SmartDashboard.putData("Floorangle", new InstantCommand(intake::setFloorAngle, intake));
-        SmartDashboard.putData("AmpAngle", new InstantCommand(intake::setAmpAngle));
+        // SmartDashboard.putData("Floorangle", new InstantCommand(intake::setFloorAngle, intake));
+        // SmartDashboard.putData("AmpAngle", new InstantCommand(intake::setAmpAngle));
         // SmartDashboard.putData("ShooterSuck", new ShooterSuck(shooter));
-        SmartDashboard.putData("Shoot", new Shoot(shooter, intake));
+        // SmartDashboard.putData("Shoot", new ShooterStandby(shooter, intake));
     }
 
     private Command wait(double d) {
@@ -219,10 +294,11 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new BlueTest2(driveBase);
+        // return new BlueTest2(driveBase);
         // return new LeftStart(photonVision, driveBase);
         // return new MiddleStart(driveBase);
         // return new RightStart(driveBase);
+        return null;
 
         // return trajectoryChooser.getSelected();
         // return getAutoChooser.getSelected();

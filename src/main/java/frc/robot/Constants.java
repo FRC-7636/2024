@@ -43,6 +43,7 @@ public class Constants {
         public static final double D = 0;
     }
 
+    
     public static class ShooterConstants {
         public static class Config {
             // CAN ID: 10-19
@@ -59,7 +60,8 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double SHOOT_VELOCITY = 3200;  // Absolute
+            public static final double 
+            SHOOT_VELOCITY = 3200;  // Absolute
             public static final double AMP_VELOCITY = 1650;  
             public static final double SHOOT_NEAR_VELOCITY = 3970;
             public static final double SUCK_SPEED = -0.3;  // Relative
@@ -71,10 +73,11 @@ public class Constants {
             public static final double REVERSE_POSITION = 20;
             public static final double SOURCE_POSITION = 28.8;
             public static final double TOP_POSITION = 46.5;
-            public static final double NEARSHOOT_POSITION = 43;
+            public static final double 
+            NEARSHOOT_POSITION = 43;
             public static final double TRANS_SPEED = 0.1;
             // public static final double SHOOTER_TRANS_SPEED = 0.5;
-            public static final double SHOOTER_TRANS_SPEED = 0.3;
+            public static final double SHOOTER_TRANS_SPEED = 0.8;
         }
 
         public static class AnglePIDF {

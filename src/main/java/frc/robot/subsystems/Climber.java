@@ -96,6 +96,11 @@ public class Climber extends SubsystemBase {
         rearMotor.stopMotor();
     }
 
+    public void setSucklevel(){
+        frontMotor.setControl(new MotionMagicDutyCycle(5));
+        rearMotor.setControl(new MotionMagicDutyCycle(5));
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Climber Position F", frontMotor.getPosition().getValueAsDouble());
