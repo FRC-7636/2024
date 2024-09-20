@@ -9,56 +9,59 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 
-public class Reverse extends Command {
-        private final Shooter shooter;
-        private final Intake intake;
-
-        public Reverse(Shooter shooter, Intake intake) {
-        this.shooter = shooter;
-        this.intake = intake;
-                
-        addRequirements(this.shooter, this.intake);
-        }
-
-        @Override
-        public void execute(){
-                intake.setFloorAngle();
-                intake.shoot();
-                intake.setReverseAngle();
-                intake.reverseConvey();
-                shooter.setPosition(Constants.ShooterConstants.Control.INTAKE_POSITION);
-                shooter.antiTransport();
-                shooter.suck();
-        }
-
-        @Override
-        public boolean isFinished(){
-                return (Math.abs(intake.intakeVel()) < 5300) && !shooter.noteDetected();
-        }
+public class Reverse extends SequentialCommandGroup{
+        public Reverse(Shooter shooter,Intake intake){
         
-        @Override
-        public void end(boolean interrupted) {
-        shooter.stopAll();
-        intake.stopAll();
-        // intake.stopConvey();
-        // intake.stopIntake();
-        shooter.topAngle();
-        intake.backToZero();
-        }
+        addCommands(new InstantCommand(() -> shooter.setPosition(Constants.ShooterConstants.Control.INTAKE_POSITION)));
+        addCommands(new InstantCommand(intake::setReverseAngle));
+        addCommands(new WaitCommand(1));
+        addCommands(new InstantCommand(intake::reverseConvey));
+        addCommands(new InstantCommand(shooter::antiTransport));
+        addCommands(new InstantCommand(intake::shoot));
+        addCommands(new WaitCommand(1).
+                andThen(intake::stopAll).
+                andThen(shooter::stopAll).
+                andThen(intake::backToZero).
+                andThen(shooter::originAngle));
 }
+}
+        // private final Shooter shooter;
+        // private final Intake intake;
+
+        // public Reverse(Shooter shooter, Intake intake) {
+        // this.shooter = shooter;
+        // this.intake = intake;
+                
+        // addRequirements(this.shooter, this.intake);
+        // }
+
+        // @Override
+        // public void execute(){
+        //         intake.setFloorAngle();
+        //         intake.shoot();
+        //         intake.setReverseAngle();
+        //         intake.reverseConvey();
+        //         shooter.setPosition(Constants.ShooterConstants.Control.INTAKE_POSITION);
+        //         shooter.antiTransport();
+        //         shooter.suck();
+        // }
+
+        // @Override
+        // public boolean isFinished(){
+        //         return (Math.abs(intake.intakeVel()) < 5300) && !shooter.noteDetected();
+        // }
+        
+        // @Override
+        // public void end(boolean interrupted) {
+        // shooter.stopAll();
+        // intake.stopAll();
+        // // intake.stopConvey();
+        // // intake.stopIntake();
+        // shooter.topAngle();
+        // intake.backToZero();
+        // }
 
 
 
 
-// addCommands();
-//         addCommands(new InstantCommand(intake::setFloorAngle));
-//         addCommands(new InstantCommand(() -> shooter.setPosition(Constants.ShooterConstants.Control.INTAKE_POSITION)).
-//                 andThen(shooter::antiTransport));
-//         addCommands(new InstantCommand(intake::setReverseAngle).
-//                 andThen(intake::reverseConvey));
-//         addCommands(new InstantCommand(intake::shoot));
-//         addCommands(new WaitCommand(1).
-//                 andThen(intake::stopAll).
-//                 andThen(shooter::stopAll).
-//                 andThen(intake::backToZero).
-//                 andThen(shooter::originAngle));
+

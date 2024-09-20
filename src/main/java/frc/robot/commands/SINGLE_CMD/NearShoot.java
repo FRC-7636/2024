@@ -23,7 +23,6 @@ public class NearShoot extends Command {
         shooter.shootTwo();
         shooter.ShooterTransport();
         if (shooter.readyToShoot()) {
-            intake.conveyorShoot();
             shooter.transport();
             shooter.shootNear();
         }

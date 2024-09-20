@@ -233,7 +233,7 @@ public class Shooter extends SubsystemBase {
         // boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         // //        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         // boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
-        return (autoTurnReady() && angleReady() && velocityReady());
+        return velocityReady();
     }
 
     public boolean angleReady() {
@@ -243,7 +243,7 @@ public class Shooter extends SubsystemBase {
     public boolean velocityReady(){
         // return Math.abs(angleEncoder.getVelocity() - desiredSpeed) <= 1000;
         // return Math.abs(ShooterConstants.Control.SHOOT_VELOCITY - angleEncoder.getVelocity() ) <= 800;
-        return Math.abs(ShooterConstants.Control.SHOOT_VELOCITY ) >= 3200;
+        return Math.abs(ShooterConstants.Control.SHOOT_VELOCITY ) >= 3000;
         // return Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
     }
 

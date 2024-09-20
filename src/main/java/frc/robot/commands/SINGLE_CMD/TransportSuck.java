@@ -10,20 +10,19 @@ public class TransportSuck extends Command {
 
     public TransportSuck (Shooter shooter, Intake intake){
         this.shooter = shooter;
-        this.intake = intake;
-        
+        this.intake = intake;        
         addRequirements(this.shooter, this.intake);
     }
 
     public void execute(){
-        shooter.suck();
+        // shooter.suck();
         // shooter.antiTransport();
         intake.reverseConvey();
     }
 
     @Override
     public boolean isFinished(){
-        return shooter.noteDetected(); 
+        return !shooter.noteDetected(); 
     }
 
     @Override

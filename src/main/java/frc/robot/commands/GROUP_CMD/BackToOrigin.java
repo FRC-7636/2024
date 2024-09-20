@@ -13,5 +13,6 @@ public class BackToOrigin extends ParallelCommandGroup {
         addCommands(new InstantCommand(climber::setFloorLevel, climber));
         addCommands(new InstantCommand(intake::backToZero, intake));
         addCommands(new InstantCommand(shooter::originAngle, shooter));
+        addCommands(new InstantCommand(shooter::stopAll));
     }
 }

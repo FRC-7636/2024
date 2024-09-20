@@ -33,8 +33,8 @@ public class SafeIntake extends SequentialCommandGroup{
         //     }
         // };
         addCommands(new SmartIntake(shooter, intake));
-        addCommands(new InstantCommand(climber::setSucklevel));
-        addCommands(new TransportSuck(shooter, intake));
+        // addCommands(new InstantCommand(climber::setSucklevel));
+        // addCommands(new TransportSuck(shooter, intake));
         addCommands(new TransportShoot(shooter, intake));
         addCommands(new InstantCommand(shooter::standby));
         addCommands(new InstantCommand(shooter::intakeAngle));
