@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.ejml.sparse.csc.decomposition.lu.LuUpLooking_FSCC;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.AutoBuilderException;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -85,11 +87,15 @@ public class RobotContainer {
     //         chassisCtrl::getLeftY,
     //         chassisCtrl::getLeftX,
     //         chassisCtrl::getRightX);
+    // private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase, 
+    //             Jay_Ctrl::getLeftY, 
+    //             Jay_Ctrl::getLeftX, 
+    //             Jay_Ctrl::getRightX);
 
     private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase,
-        Jay_Ctrl::getLeftY,
-        Jay_Ctrl::getLeftX,
-        Jay_Ctrl::getRightX);
+                () -> PS5DeadbandLeftY(),
+                () -> PS5DeadbandLeftX(),
+                () -> PS5DeadbandRightX());
 
     private final StopEverything stopEverything = new StopEverything(intake, shooter);
     private final SmartShoot smartShoot = new SmartShoot(shooter, intake, driveBase, limelight);
@@ -282,4 +288,32 @@ public class RobotContainer {
         }
     }   
     */
+
+    public double PS5DeadbandRightX(){
+        double deadband = 0;
+        double RightX = Jay_Ctrl.getRightX();
+        
+        if(RightX < deadband){
+            RightX = 0;
+        }
+        return RightX;
+    }
+    public double PS5DeadbandLeftX(){
+        double deadband = 0;
+        double LeftX = Jay_Ctrl.getLeftX();
+
+        if(LeftX < deadband){
+            LeftX = 0;
+        }
+        return LeftX;
+    }
+    public double PS5DeadbandLeftY(){
+        double deadband = 0;
+        double LeftY = Jay_Ctrl.getLeftY();
+
+        if(LeftY < deadband){
+            LeftY = 0;
+        }
+        return LeftY;
+    }
 }
