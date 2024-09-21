@@ -87,6 +87,7 @@ public class RobotContainer {
     //         chassisCtrl::getLeftY,
     //         chassisCtrl::getLeftX,
     //         chassisCtrl::getRightX);
+
     // private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase, 
     //             Jay_Ctrl::getLeftY, 
     //             Jay_Ctrl::getLeftX, 
@@ -290,29 +291,57 @@ public class RobotContainer {
     */
 
     public double PS5DeadbandRightX(){
-        double deadband = 0;
+        double deadband = 0.02;
         double RightX = Jay_Ctrl.getRightX();
         
-        if(RightX < deadband){
-            RightX = 0;
+        if(RightX > 0){
+            
+            if(RightX < deadband){
+                RightX = 0;
+            }
+        }
+        else if(RightX < 0){
+            if(RightX > deadband){
+                RightX = 0;
+            }
         }
         return RightX;
+        
     }
     public double PS5DeadbandLeftX(){
-        double deadband = 0;
+        double deadband = 0.2;
         double LeftX = Jay_Ctrl.getLeftX();
 
-        if(LeftX < deadband){
-            LeftX = 0;
+        if(LeftX > 0){
+            
+            if(LeftX < deadband){
+                LeftX = 0;
+            }
+        }
+        else if(LeftX < 0){
+            
+            if(LeftX > deadband){
+                LeftX = 0;
+            }
         }
         return LeftX;
     }
+
     public double PS5DeadbandLeftY(){
-        double deadband = 0;
+        double deadband = 0.02;
         double LeftY = Jay_Ctrl.getLeftY();
 
-        if(LeftY < deadband){
-            LeftY = 0;
+        if(LeftY > 0){
+            
+            if(LeftY < deadband){
+                LeftY = 0;
+            }
+        }
+        else if(LeftY < 0){
+            
+            if(LeftY > deadband){
+                LeftY = 0;
+            }
         }
         return LeftY;
     }
