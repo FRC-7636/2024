@@ -118,7 +118,7 @@ public class Constants {
 
         public static class Control {
             // public static final double FLOOR_POSITION = 129.5;
-            public static final double FLOOR_POSITION = 240;
+            public static final double FLOOR_POSITION = 243;
             public static final double REVERSE_POSITION = 270;
             public static final double AMP_POSITION = 350;
             public static final double SOURCE_POSITION = 10;

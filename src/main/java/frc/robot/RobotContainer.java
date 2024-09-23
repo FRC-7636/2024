@@ -88,15 +88,15 @@ public class RobotContainer {
     //         chassisCtrl::getLeftX,
     //         chassisCtrl::getRightX);
 
-    // private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase, 
-    //             Jay_Ctrl::getLeftY, 
-    //             Jay_Ctrl::getLeftX, 
-    //             Jay_Ctrl::getRightX);
+    private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase, 
+                Jay_Ctrl::getLeftY, 
+                Jay_Ctrl::getLeftX, 
+                Jay_Ctrl::getRightX);
 
-    private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase,
-                () -> PS5DeadbandLeftY(),
-                () -> PS5DeadbandLeftX(),
-                () -> PS5DeadbandRightX());
+    // private final NewFieldDrive chassisFD = new NewFieldDrive(driveBase,
+    //             () -> PS5DeadbandLeftY(),
+    //             () -> PS5DeadbandLeftX(),
+    //             () -> PS5DeadbandRightX());
 
     private final StopEverything stopEverything = new StopEverything(intake, shooter);
     private final SmartShoot smartShoot = new SmartShoot(shooter, intake, driveBase, limelight);
@@ -191,9 +191,9 @@ public class RobotContainer {
     }
 
     public void Jay_configureBindings(){
-        new JoystickButton(Jay_Ctrl, 1).onTrue(new InstantCommand(driveBase::setIntakeAsHead));
+        new JoystickButton(Jay_Ctrl, 1).whileTrue(new InstantCommand(shooter::shootslow)).onFalse(new InstantCommand(shooter::stopAll));
         new JoystickButton(Jay_Ctrl, 2).onTrue(backToOrigin); //back to origin
-        new JoystickButton(Jay_Ctrl, 4).whileTrue(new InstantCommand(intake::reverseConvey)); //Amp
+        new JoystickButton(Jay_Ctrl, 4).whileTrue(reverse).onFalse(new InstantCommand(intake::stopAll)).onFalse(new InstantCommand(shooter::stopAll));
         new JoystickButton(Jay_Ctrl, 5).whileTrue(ampShoot).onFalse(backToOrigin).onFalse(new InstantCommand(intake::stopAll)); //AmpShoot
         new JoystickButton(Jay_Ctrl, 6).whileTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopAll));
         new JoystickButton(Jay_Ctrl, 7).whileTrue(new InstantCommand(shooter::shoot)).onFalse(new InstantCommand(shooter::stopAll)); //intake shoot       
@@ -202,16 +202,17 @@ public class RobotContainer {
         // new POVButton(Jay_Ctrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop)); //climber up
         // new POVButton(Jay_Ctrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
         // new POVButton(Jay_Ctrl, 90).whileTrue(climbUp);
-        // new POVButton(Jay_Ctrl, 90).whileTrue(reverse);
 
         new JoystickButton(chassisCtrl, 1).onTrue(backToOrigin);
         new JoystickButton(chassisCtrl, 2).whileTrue(safeIntake).onFalse(new InstantCommand(intake::stopAll)).onFalse(new InstantCommand(shooter::stopAll)).onFalse(backToOrigin);
-        // new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(shooter::shoot)).onTrue(new InstantCommand(shooter::NearShootAngle)).whileFalse(new InstantCommand(shooter::stopAll)).onFalse(new InstantCommand(intake::stopAll));
+        new JoystickButton(chassisCtrl, 3).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll)); //Amp
         new JoystickButton(chassisCtrl, 4).onTrue(new InstantCommand(intake::setFloorAngle)).whileTrue(new InstantCommand(intake::suck)).onFalse(new InstantCommand(intake::stopIntake)); // intake suck
         new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::suck)).onFalse(new InstantCommand(intake::stopIntake)); // intake suck
         new JoystickButton(chassisCtrl, 6).onTrue(new InstantCommand(intake::setAmpAngle)).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll)); //intake shoot
+        new JoystickButton(chassisCtrl, 7).onTrue(climbUp).whileFalse(stopEverything);
         
         new POVButton(chassisCtrl, 0).onTrue(ampCmd); //amp
+        new POVButton(chassisCtrl, 90).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
         new POVButton(chassisCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
         new POVButton(chassisCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber)); //climber set floor level
     }
@@ -309,7 +310,7 @@ public class RobotContainer {
         
     }
     public double PS5DeadbandLeftX(){
-        double deadband = 0.2;
+        double deadband = 0.02;
         double LeftX = Jay_Ctrl.getLeftX();
 
         if(LeftX > 0){
@@ -328,7 +329,7 @@ public class RobotContainer {
     }
 
     public double PS5DeadbandLeftY(){
-        double deadband = 0.02;
+        double deadband = 0.03;
         double LeftY = Jay_Ctrl.getLeftY();
 
         if(LeftY > 0){

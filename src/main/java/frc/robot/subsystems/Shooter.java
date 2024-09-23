@@ -115,6 +115,13 @@ public class Shooter extends SubsystemBase {
         leftMotor.set(0.6);
         rightMotor.set(0.6);
     }
+
+    public void shootslow() {
+        desiredSpeed = ShooterConstants.Control.SHOOT_NEAR_VELOCITY;
+        leftMotor.set(0.175);
+        rightMotor.set(0.175);
+    }
+
     public void AMPshoot(){
         desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
         leftMotor.set(0.3);
