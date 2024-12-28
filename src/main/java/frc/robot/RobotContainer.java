@@ -68,7 +68,8 @@ public class RobotContainer {
     private final XboxController chassisCtrl = new XboxController(0);
     private final XboxController assistCtrl = new XboxController(1);
     private final XboxController testCtrl = new XboxController(2);
-    private final PS5Controller Jay_Ctrl = new PS5Controller(3);
+    // private final PS5Controller Jay_Ctrl = new PS5Controller(3);
+    private final XboxController Jay_Ctrl = new XboxController(3);
 
     // Auto Commands
     private final MiddleStart middleStart = new MiddleStart(driveBase, shooter, intake);
@@ -199,7 +200,7 @@ public class RobotContainer {
         new JoystickButton(Jay_Ctrl, 7).whileTrue(new InstantCommand(shooter::shoot)).onFalse(new InstantCommand(shooter::stopAll)); //intake shoot       
         new JoystickButton(Jay_Ctrl, 8).whileTrue(justShoot).onFalse(new InstantCommand(shooter::stopAll)).onFalse(new InstantCommand(intake::stopAll)); //intake set floor angle
         
-        // new POVButton(Jay_Ctrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop)); //climber up
+        new POVButton(Jay_Ctrl, 0).onTrue(new InstantCommand(climber::setBalanceLevel, climber)); // climber balance level
         // new POVButton(Jay_Ctrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop)); //climber down
         // new POVButton(Jay_Ctrl, 90).whileTrue(climbUp);
 
@@ -290,13 +291,11 @@ public class RobotContainer {
         }
     }   
     */
-
     public double PS5DeadbandRightX(){
         double deadband = 0.02;
         double RightX = Jay_Ctrl.getRightX();
         
-        if(RightX > 0){
-            
+        if(RightX > 0){ 
             if(RightX < deadband){
                 RightX = 0;
             }
@@ -313,14 +312,12 @@ public class RobotContainer {
         double deadband = 0.02;
         double LeftX = Jay_Ctrl.getLeftX();
 
-        if(LeftX > 0){
-            
+        if(LeftX > 0){  
             if(LeftX < deadband){
                 LeftX = 0;
             }
         }
-        else if(LeftX < 0){
-            
+        else if(LeftX < 0){  
             if(LeftX > deadband){
                 LeftX = 0;
             }
@@ -332,14 +329,12 @@ public class RobotContainer {
         double deadband = 0.03;
         double LeftY = Jay_Ctrl.getLeftY();
 
-        if(LeftY > 0){
-            
+        if(LeftY > 0){   
             if(LeftY < deadband){
                 LeftY = 0;
             }
         }
-        else if(LeftY < 0){
-            
+        else if(LeftY < 0){ 
             if(LeftY > deadband){
                 LeftY = 0;
             }
